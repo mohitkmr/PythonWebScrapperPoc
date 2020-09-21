@@ -140,7 +140,41 @@ paths:
                     type: string
                 example:
                   access: user-token
-                        
+  /profiles:
+    get:
+      tags:
+      - Profiles
+      description: verifies a user and gets their details
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProfileDetails'                  
+  /profiles/{id}:
+    get:
+      tags:
+      - Profiles
+      summary: Retrieves a user by id.
+      parameters:
+        - name: id
+          in: path
+          description: User ID
+          required: true
+          schema:
+            type: string
+  
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProfileDetails'
+               
 components:
   schemas:
     UserDetails:
@@ -225,7 +259,101 @@ components:
           type: string
           example: greyhr
             
-            
+    ProfileDetails:
+      type: object
+      properties:
+        id:
+          type: string
+          example: '47b216e2-d334-4235-bc1e-185d15ab18d0'
+        account:
+          type: string
+          example: '010db8b4-a724-47fc-a17e-733b656312a2'
+        created_at:
+          type: string
+          example: '2019-11-27T15:56:50.583233Z'
+        updated_at:
+          type: string
+          example: '2019-11-27T15:56:50.583233Z'
+        first_name:
+          type: string
+          example: 'max'
+        last_name:
+          type: string
+          example: 'payne'
+        full_name:
+          type: string
+          example: 'max payne'
+        phone_number:
+          type: string
+          example: '+12 67579 54645' 
+        birth_date:
+          type: string
+          example: '+12 67579 54645'  
+        picture_url:
+          type: string
+          example: '+12 67579 54645'  
+        address:
+          type: object
+          properties:
+            city:
+              type: string
+              example: NEW YORK
+            line1:
+              type: string
+              example: NEW YORK
+            line2:
+              type: string
+              example: NEW YORK
+            state:
+              type: string
+              example: NEW YORK
+            country:
+              type: string
+              example: NEW YORK 
+            postal_code:
+              type: string
+              example: NEW YORK
+        employment_status:
+          type: string
+          example: 'active' 
+        employment_type:
+          type: string
+          example: 'part time'
+        job_title:
+          type: string
+          example: 'Driver' 
+        aadhaar_number:
+          type: string
+          example: '***-***-**15' 
+        platform_user_id:
+          type: string
+          example: 'b18d015a'  
+        marital_status:
+          type: string
+          example: 'married' 
+        gender:
+          type: string
+          example: 'male'  
+        hire_dates:
+          type: array
+          items:
+              type: string
+              example: '2019-01-15T08:00:22.386555Z'
+        terminations:
+          type: array
+          items:
+            type: object
+            properties:
+              date:
+                type: string
+                example: '2019-06-15T00:00:22.142321Z'
+              reason:
+                type: string
+                example: 'contract ended'
+                
+              
+        
+                    
             
             
             
