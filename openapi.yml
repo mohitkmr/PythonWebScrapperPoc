@@ -174,6 +174,41 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ProfileDetails'
+  
+  /reputations:
+    get:
+      tags:
+      - Reputations
+      description: verifies a user and gets their details
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ReputationDetails'                  
+  /reputations/{id}:
+    get:
+      tags:
+      - Reputations
+      summary: Retrieves a user by id.
+      parameters:
+        - name: id
+          in: path
+          description: User ID
+          required: true
+          schema:
+            type: string
+  
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReputationDetails'
                
 components:
   schemas:
@@ -350,12 +385,51 @@ components:
               reason:
                 type: string
                 example: 'contract ended'
-                
-              
-        
-                    
-            
-            
-            
-            
-            
+
+    ReputationDetails:
+      type: object
+      properties:
+        id:
+          type: string
+          example: '47b216e2-d334-4235-bc1e-185d15ab18d0'
+        client:
+          type: string
+          example: '010db8b4-a724-47fc-a17e-733b656312a2'
+        created_by:
+          type: string
+          example: '82bc04fa-1e11-43f2-9a88-357f865b4998'  
+        created_at:
+          type: string
+          example: '2019-11-27T15:56:50.583233Z'
+        updated_at:
+          type: string
+          example: '2019-11-27T15:56:50.583233Z'
+        rating:
+          type: string
+          example: 4.95
+        acceptance_rate:
+          type: string
+          example: 0.86
+        ontime_rate:
+          type: string
+          example: 0.80
+        account:
+          type: string
+          example: 010db8b4-a724-47fc-a17e-733b656312a2 
+        achievements:
+          type: array
+          items:
+            type: object
+            properties:
+              count:
+                type: integer
+                example: 1
+              label:
+                type: string
+                example: perfect_rating 
+              badge_url:
+                type: string
+                example: https://media.website.com/1554853.png
+              description:
+                type: string
+                example: 'Earned on total 5-star ratings'
