@@ -1,7 +1,7 @@
 ---
 openapi: "3.0.0"
 info:
-  title: "API Specifications"
+  title: "API References"
   description: "The **Linkage API** is built on RESTful principles and returns JSON\
     \ encoded-responses and accepts JSON payloads. It is only available through HTTPS\
     \ to ensure the security of the data in transfer.\n\nThe API operates in two environments:\
@@ -13,15 +13,13 @@ info:
     name: "Linkage"
     url: "https://linkagehq.com/contact-us"
     email: "contact@linkagehq.com"
-  version: "v1.0.0"
+  version: "v1.0"
 servers:
 - url: "https://prod.linkagehq.com/api/v1.0/"
   description: "Production Server endpoint to connect data with Linkage."
 - url: "https://sandbox.linkagehq.com/api/v1.0/"
   description: "sandbox server which will hepls you simulate the system for testing\
     \ purposes."
-- url: "https://virtserver.swaggerhub.com/LinkageHQ/Api-Documentation/v1.0.0"
-  description: "SwaggerHub API Auto Mocking"
 tags:
 - name: "Data Partners"
   description: "Data partners are data sources that we allow the end-users to share\
@@ -29,16 +27,31 @@ tags:
     \ example Uber, Gusto,Greythr etc."
 - name: "User"
   description: "User objects represent distinct users that used Linkage plugin to\
-    \ connect their workforce accounts.\nYou can list all users or retrieve a user\
+    \ connect their workforce accounts.\n\nYou can list all users or retrieve a user\
     \ by id that you have saved on your database when one of the plugin callbacks\
     \ was invoked."
 - name: "User tokens"
   description: "User tokens are temporary access keys that ensure Linkage Link user's\
-    \ permissions are scoped to the specified user's data.\nUser tokens are JWT tokens\
-    \ that contain an expiry date."
+    \ permissions are scoped to the specified user's data.\n\nUser tokens are JWT\
+    \ tokens that contain an expiry date."
 - name: "Accounts"
+  description: "Accounts represent workforce platform accounts that your customers\
+    \ connect using Linkage's plugin.\n\nYou can query accounts by account ID or user\
+    \ ID that you might have obtained through one of the plugin callbacks."
 - name: "Profiles"
+  description: "A users profile acts an ID card within a specific work platform. This\
+    \ is where information like address, phone and full name are found."
 - name: "Reputations"
+  description: "Reputation objects contain data about user's performance."
+- name: "Documents"
+  description: "The document object"
+- name: "Vehicles"
+  description: "Vehicle objects represent vehicles connected to a user's workforce\
+    \ account."
+- name: "Payouts"
+  description: "Payouts objects contain aggregate payouts data."
+- name: "Finances"
+  description: "Finance objects contain data about user's finances."
 paths:
   /data-partners/{id}:
     get:
@@ -166,29 +179,17 @@ paths:
                 type: "array"
                 items:
                   $ref: "#/components/schemas/UserDetails"
-  /accounts:
-    get:
-      tags:
-      - "Accounts"
-      description: "verifies a user and gets their details"
-      responses:
-        "200":
-          description: "Successful operation"
-          content:
-            application/json:
-              schema:
-                type: "array"
-                items:
-                  $ref: "#/components/schemas/AccountDetails"
   /accounts/{id}:
     get:
       tags:
       - "Accounts"
-      summary: "Retrieves a user by id."
+      summary: "Retrieve an account"
+      description: "Retrieve an account object with the supplied ID."
+      operationId: "getAccountById"
       parameters:
       - name: "id"
         in: "path"
-        description: "User ID"
+        description: "The identifier of the account to be retrieved."
         required: true
         style: "simple"
         explode: false
@@ -196,7 +197,7 @@ paths:
           type: "string"
       responses:
         "200":
-          description: "Successful operation"
+          description: "Returns an account object if a valid identifier was provided."
           content:
             application/json:
               schema:
@@ -204,11 +205,14 @@ paths:
     delete:
       tags:
       - "Accounts"
-      summary: "Deletes a user id"
+      summary: "Delete an account"
+      description: "Deletes an account and all resources associated with that account\
+        \ profiles, vehicles, documents, incomes etc."
+      operationId: "deleteAccountById"
       parameters:
       - name: "id"
         in: "path"
-        description: "account id"
+        description: "ID of the account to be deleted."
         required: true
         style: "simple"
         explode: false
@@ -216,7 +220,60 @@ paths:
           type: "string"
       responses:
         "204":
-          description: "Successful operation"
+          description: "On successful account deletion responds with a 204 status\
+            \ and an empty response body."
+  /accounts:
+    get:
+      tags:
+      - "Accounts"
+      summary: "List accounts"
+      description: "List all accounts that your customers have connected through Linkage."
+      operationId: "getAllAccounts"
+      parameters:
+      - name: "limit"
+        in: "query"
+        description: "The number of user objects to be returned. The default is 10."
+        required: false
+        style: "form"
+        explode: true
+        schema:
+          type: "integer"
+      - name: "offset"
+        in: "query"
+        description: "The number of user objects to skip. Use this argument for pagination.\
+          \ The default is 0."
+        required: false
+        style: "form"
+        explode: true
+        schema:
+          type: "integer"
+      - name: "data_partner"
+        in: "query"
+        description: "Only return accounts for the data partner with the provided\
+          \ ID."
+        required: false
+        style: "form"
+        explode: true
+        schema:
+          type: "integer"
+      - name: "user"
+        in: "query"
+        description: "Only return accounts for the user with the provided ID."
+        required: false
+        style: "form"
+        explode: true
+        schema:
+          type: "integer"
+      responses:
+        "200":
+          description: "An object with a results property that contains an array of\
+            \ up to limit account objects."
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/AccountDetails"
   /user-tokens:
     post:
       tags:
@@ -224,6 +281,7 @@ paths:
       summary: "Create a token"
       description: "To create a user token send a POST request with the request body\
         \ containing a json object of the following format"
+      operationId: "getUserToken"
       requestBody:
         content:
           application/json:
@@ -232,11 +290,11 @@ paths:
               properties:
                 user:
                   type: "string"
-              example:
-                user: "user-id"
+                  example: "fdwr-3425325-sdvsfg"
       responses:
         "200":
-          description: "Successful operation"
+          description: "The user token enclosed in a json object: {\"access\": \"\
+            user-token\"}."
           content:
             application/json:
               schema:
@@ -250,10 +308,46 @@ paths:
     get:
       tags:
       - "Profiles"
-      description: "verifies a user and gets their details"
+      description: "Lists profile objects."
+      operationId: "getAllProfiles"
+      parameters:
+      - name: "limit"
+        in: "query"
+        description: "The number of user objects to be returned. The default is 10."
+        required: false
+        style: "form"
+        explode: true
+        schema:
+          type: "integer"
+      - name: "offset"
+        in: "query"
+        description: "The number of user objects to skip. Use this argument for pagination.\
+          \ The default is 0."
+        required: false
+        style: "form"
+        explode: true
+        schema:
+          type: "integer"
+      - name: "account"
+        in: "query"
+        description: "Only return the profile for the account with the provided ID."
+        required: false
+        style: "form"
+        explode: true
+        schema:
+          type: "integer"
+      - name: "user"
+        in: "query"
+        description: "Only return accounts for the user with the provided ID."
+        required: false
+        style: "form"
+        explode: true
+        schema:
+          type: "integer"
       responses:
         "200":
-          description: "Successful operation"
+          description: "An object with a results property that contains an array of\
+            \ up to limit profile objects."
           content:
             application/json:
               schema:
@@ -264,7 +358,9 @@ paths:
     get:
       tags:
       - "Profiles"
-      summary: "Retrieves a user by id."
+      summary: "Retrieve a profile"
+      description: "Retrieves the profile object with the supplied ID."
+      operationId: "getProfileById"
       parameters:
       - name: "id"
         in: "path"
@@ -276,7 +372,7 @@ paths:
           type: "string"
       responses:
         "200":
-          description: "Successful operation"
+          description: "Returns a profile object if a valid identifier was provided."
           content:
             application/json:
               schema:
@@ -285,7 +381,9 @@ paths:
     get:
       tags:
       - "Reputations"
-      description: "verifies a user and gets their details"
+      summary: "List reputations"
+      description: "Lists all reputation objects which are registered in Linkage."
+      operationId: "getAllReputations"
       responses:
         "200":
           description: "Successful operation"
@@ -299,7 +397,9 @@ paths:
     get:
       tags:
       - "Reputations"
-      summary: "Retrieves a user by id."
+      summary: "Retrieve a reputation"
+      description: "Retrieves a reputation object with the supplied ID."
+      operationId: "getReputationById"
       parameters:
       - name: "id"
         in: "path"
@@ -316,8 +416,184 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ReputationDetails"
+  /documents:
+    get:
+      tags:
+      - "Documents"
+      summary: "List documents"
+      description: "Lists all documents."
+      operationId: "getAllDocuments"
+      responses:
+        "200":
+          description: "An object with a results property that contains an array of\
+            \ up to limit document objects."
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/Documents"
+  /documents/{id}:
+    get:
+      tags:
+      - "Documents"
+      summary: "Retrieve a document"
+      description: "Retrieves the document with the supplied ID."
+      operationId: "getDocumentById"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "The identifier of the document to be retrieved."
+        required: true
+        style: "simple"
+        explode: false
+        schema:
+          type: "string"
+      responses:
+        "200":
+          description: "Returns a document object if a valid identifier was provided."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Documents"
+  /vehicles:
+    get:
+      tags:
+      - "Vehicles"
+      summary: "List vehicles"
+      description: "List vehicles"
+      operationId: "getAllVehicles"
+      responses:
+        "200":
+          description: "An object with a results property that contains an array of\
+            \ up to limit vehicle objects."
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/Vehicles"
+  /vehicles/{id}:
+    get:
+      tags:
+      - "Vehicles"
+      summary: "Retrieve a vehicle"
+      description: "Retrieves a vehicle object with the supplied ID."
+      operationId: "getVehicleById"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "The identifier of the vehicle to be retrieved."
+        required: true
+        style: "simple"
+        explode: false
+        schema:
+          type: "string"
+      responses:
+        "200":
+          description: "Returns a vehicle object if a valid identifier was provided."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Vehicles"
+  /payouts:
+    get:
+      tags:
+      - "Payouts"
+      summary: "List payouts"
+      description: "List payouts"
+      operationId: "getAllPayouts"
+      responses:
+        "200":
+          description: "An object with a results property that contains an array of\
+            \ up to limit payouts objects."
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/Payouts"
+  /payouts/{id}:
+    get:
+      tags:
+      - "Payouts"
+      summary: "Retrieve a payout"
+      description: "Retrieves a payout object with the supplied ID."
+      operationId: "getPayoutById"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "The identifier of the payout to be retrieved."
+        required: true
+        style: "simple"
+        explode: false
+        schema:
+          type: "string"
+      responses:
+        "200":
+          description: "Returns a payout object if a valid identifier was provided."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Payouts"
+  /finances:
+    get:
+      tags:
+      - "Finances"
+      summary: "Lists all finance objects which are registered in Linkage."
+      description: "List finances"
+      operationId: "getAllFinances"
+      responses:
+        "200":
+          description: "An object with a results property that contains an array of\
+            \ up to limit finance objects."
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/Finances"
+  /finances/{id}:
+    get:
+      tags:
+      - "Finances"
+      summary: "Retrieve a finance"
+      description: "Retrieves a payout object with the supplied ID."
+      operationId: "getFinaceById"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "The identifier of the payout to be retrieved."
+        required: true
+        style: "simple"
+        explode: false
+        schema:
+          type: "string"
+      responses:
+        "200":
+          description: "Returns a finance object if a valid identifier was provided."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Payouts"
 components:
   schemas:
+    DataPartner:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+          description: "Object's unique identifier."
+          example: "uber"
+        name:
+          type: "string"
+          description: "Name of the data partner. e.g. Uber."
+          example: "Uber Technologies"
+        type:
+          type: "string"
+          description: "Type of the data partner. The value will be one of the following\
+            \ - delivery, rideshare, or services."
+          example: "services"
     UserDetails:
       type: "object"
       properties:
@@ -342,26 +618,69 @@ components:
       properties:
         id:
           type: "string"
+          description: "Object's unique identifier."
           example: "ac81e2bc-2157-4535-8ca4-fb1f068df1fc"
         user:
           type: "string"
+          description: "User ID."
           example: "ac81e2bc-2157-4535-8ca4-fb1f068df1fc"
         created_at:
           type: "string"
+          description: "Time at which the account was connected."
           example: "2019-11-27T15:56:50.583233Z"
         updated_at:
           type: "string"
+          description: "Timestamp denoting the last time connection status was updated."
           example: "2019-11-27T15:56:50.583233Z"
         connection:
           type: "object"
           properties:
             status:
               type: "string"
+              description: "Represents the status of the link between Linkage and\
+                \ the work platform. Possible values are\nconnecting – account is\
+                \ connecting to work platform. This status only occurs when user submits\
+                \ their credentials through Link for a new account or for an existing\
+                \ account.\n\nconnected – account is linked with the work platform\
+                \ (This does not mean the data pull has finished. Use the availability\
+                \ field to check if data has been synced).\n\nerror – account is not\
+                \ linked to the work platform. Linkage is not able to pull data for\
+                \ the account. See connection.error_code below for details."
               example: "connected"
             error_code:
               type: "string"
+              description: "Provides complementary information about why the link\
+                \ between a work platform and Linkage failed when connection.status\
+                \ is error. Possible values are\n\nunsupported_auth_type - workers\
+                \ account uses unsupported authentication type. For example, when\
+                \ account uses SSO authentication like Google or Facebook.\n\ninvalid_credentials\
+                \ – user entered wrong credentials.\n\ninvalid_mfa – user failed the\
+                \ multi-factor authentication challenge.\n\ninvalid_auth – user either\
+                \ entered wrong credentials or failed the multi-factor authentication\
+                \ challenge.\n\nauth_required – user needs to re-authenticate in Link.\
+                \ This error occurs when a connected account disconnects. For example,\
+                \ when user changes their credentials on the work platform.\n\nmfa_timeout\
+                \ – user didn't complete the multi-factor authentication.\n\nunsupported_mfa_method\
+                \ – work platform presented user with a multi-factor authentication\
+                \ challenge not supported by Linkage.\n\naccount_incomplete – user\
+                \ didn't complete their onboarding in the work platform or the work\
+                \ platform account is not active.\n\ntos_required – user did not agree\
+                \ to the terms of service on the work platform.\n\nemail_verification_required\
+                \ – user did not verify their email on the work platform.\n\ninvalid_account_type\
+                \ – workers account is of an unexpected type. For example, when user\
+                \ tries to link their Uber passenger's account instead of their driver's\
+                \ account.\n\naccount_disabled – account is disabled on the work platform.\n\
+                \naccount_inaccessible – account cannot be accessed. User should check\
+                \ if they can log in to their account on the work platform and see\
+                \ if their account is active.\n\nsystem_error – an unforeseen error\
+                \ occurred. Linkage is notified and investigates all system errors.\
+                \ System errors occur, for example, when work platforms update their\
+                \ APIs unexpectedly."
+              example: "unsupported_auth_type"
             updated_at:
               type: "string"
+              description: "Timestamp denoting the last time connection status was\
+                \ updated."
               example: "2019-11-29T08:37:42.112859"
         availability:
           type: "object"
@@ -399,8 +718,11 @@ components:
                 updated_at:
                   type: "string"
                   example: "2019-11-27T15:56:20.699808"
+          description: "Contains synchronization status and the updated_at for each\
+            \ resource belonging to the account."
         data_partner:
           type: "string"
+          description: "ID of the data partner this account is associated with."
           example: "greyhr"
     ProfileDetails:
       type: "object"
@@ -540,19 +862,187 @@ components:
               description:
                 type: "string"
                 example: "Earned on total 5-star ratings"
-    DataPartner:
+    Documents:
+      title: "Documents"
       type: "object"
       properties:
         id:
           type: "string"
           description: "Object's unique identifier."
-          example: "uber"
-        name:
+          example: "110a6cd9-2cd5-3a8e-b8db-3fae4e96b58a"
+        account:
           type: "string"
-          description: "Name of the data partner. e.g. Uber."
-          example: "Uber Technologies"
+          description: "Account ID."
+          example: "e0c16ace-0628-25da-8928-5dffd7a7b1d1"
+        document_number:
+          type: "string"
+          description: "Identification number on the document."
+          example: "D1234567"
+        document_type:
+          type: "string"
+          description: "One of the following drivers-license, vehicle-registration,\
+            \ profile-picture, vehicle-insurance, vehicle-inspection, lax-placard,\
+            \ or other."
+          example: "drivers-license"
+        document_type_description:
+          type: "string"
+          description: "A free form text describing document's type (e.g. Driver's\
+            \ license)."
+          example: "Driver's license"
+        expiration_date:
+          type: "string"
+          description: "Expiration date (e.g. 2021-01-04, 2023-03)."
+          example: "2026-01-01T00:00:00Z"
+        file_url:
+          type: "string"
+          description: "Contains publicly accessible URL to the file if this document\
+            \ has one. The URL is valid for one hour."
+          example: "https://linkage-api-prod-uploads.storage.googleapis.com/e0c16ace-0628-25da-8928-5dffd7a7b1d1-20200016"
+      description: "The document object"
+    Vehicles:
+      title: "Vehicles"
+      type: "object"
+      properties:
+        id:
+          type: "string"
+          description: "Object's unique identifier."
+          example: "e8b085d1-fa2c-4e0f-8b2e-93c6ac991f12"
+        vin:
+          type: "string"
+          description: "Vehicle identification number."
+          example: "xuz-345"
+        account:
+          type: "string"
+          description: "Account ID."
+          example: "010db8b4-a724-47fc-c17e-733b656312a1"
+        make:
+          type: "string"
+          description: "Make (e.g. Ford, Toyota)."
+          example: "Toyota"
+        model:
+          type: "string"
+          description: "Model (e.g. Fiesta, Prius)."
+          example: "Corolla"
+        year:
+          type: "string"
+          description: "Manufacture year (e.g. 2011)."
+          example: "2011"
+        identification:
+          type: "string"
+          description: "License plate or other id depending on the vehicle type."
+          example: "HIJ8473"
         type:
           type: "string"
-          description: "Type of the data partner. The value will be one of the following\
-            \ - delivery, rideshare, or services."
-          example: "services"
+          description: "Vehicle type. Can be one of car, pedestrian, ebike, bicycle\
+            \ or scooter."
+          example: "car"
+      description: "Vehicle objects represent vehicles connected to a user's workforce\
+        \ account."
+    Payouts:
+      title: "Payouts"
+      type: "object"
+      properties:
+        id:
+          type: "string"
+          description: "Object's unique identifier."
+          example: "47b216e2-d334-4235-bc1e-185d15ab18d0"
+        status:
+          type: "string"
+          description: "Payout status. The value will be one of the following completed,\
+            \ scheduled or cancelled"
+          example: "completed"
+        type:
+          type: "string"
+          description: "Payout status. The value will be one of the following completed,\
+            \ scheduled or cancelled"
+          example: "direct_deposit"
+        payout_date:
+          type: "string"
+          description: "Timestamp representing the payout execution date."
+          example: "2020-01-27T08:26:16Z"
+        currency:
+          type: "string"
+          description: "Currency of the payout (INR, EUR, USD)."
+          example: "INR"
+        gross_pay:
+          type: "string"
+          description: "Gross pay amount."
+          example: "6.70"
+        deductions:
+          type: "string"
+          description: "Deductions amount."
+          example: "0.00"
+        taxes:
+          type: "string"
+          description: "Taxes amount."
+          example: "2.31"
+        net_pay:
+          type: "string"
+          description: "Net pay amount."
+          example: "6.70"
+        bonuses:
+          type: "string"
+          description: "Bonuses amount."
+          example: "10.70"
+        commission:
+          type: "string"
+          description: "Commission amount"
+          example: "15.32"
+        overtime:
+          type: "string"
+          description: "Overtime pay amount."
+          example: "9.02"
+        reimbursements:
+          type: "string"
+          description: "Reimbursement amount."
+          example: "20.00"
+        hours:
+          type: "string"
+          description: "Hours spent working."
+        metadata:
+          type: "string"
+          description: "Payout metadata."
+        employer_address:
+          type: "object"
+          properties:
+            city:
+              type: "string"
+              description: "City."
+              example: "NEW YORK"
+            country:
+              type: "string"
+              description: "Country."
+              example: "US"
+            state:
+              type: "string"
+              description: "State."
+              example: "NY"
+            line1:
+              type: "string"
+              description: "Address line 1."
+              example: "33 IRVING PLACE"
+            line2:
+              type: "string"
+              description: "Address line 2."
+            postal_code:
+              type: "string"
+              description: "Postal code."
+              example: "560087"
+          description: "Employer Address Details"
+      description: "Payouts objects contain aggregate payouts data."
+    Finances:
+      title: "Finances"
+      type: "object"
+      properties:
+        balance:
+          type: "string"
+          description: "Current balance."
+          example: "100"
+        balance_currency:
+          type: "string"
+          description: "Currency of current balance."
+        payout_method:
+          type: "string"
+          description: "A name of a possibly platform specific payout method."
+          example: "uber"
+      description: "Finance objects contain data about user's finances."
