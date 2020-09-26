@@ -1,0 +1,558 @@
+---
+openapi: "3.0.0"
+info:
+  title: "API Specifications"
+  description: "The **Linkage API** is built on RESTful principles and returns JSON\
+    \ encoded-responses and accepts JSON payloads. It is only available through HTTPS\
+    \ to ensure the security of the data in transfer.\n\nThe API operates in two environments:\
+    \ **production** and **sandbox**.\n\nSandbox environment returns mock data and\
+    \ is used for testing the basic fucntionality of the system.\n\nProduction environment\
+    \ is used to retrieve the real accounts connected through Linkage.           \
+    \  "
+  contact:
+    name: "Linkage"
+    url: "https://linkagehq.com/contact-us"
+    email: "contact@linkagehq.com"
+  version: "v1.0.0"
+servers:
+- url: "https://prod.linkagehq.com/api/v1.0/"
+  description: "Production Server endpoint to connect data with Linkage."
+- url: "https://sandbox.linkagehq.com/api/v1.0/"
+  description: "sandbox server which will hepls you simulate the system for testing\
+    \ purposes."
+- url: "https://virtserver.swaggerhub.com/LinkageHQ/Api-Documentation/v1.0.0"
+  description: "SwaggerHub API Auto Mocking"
+tags:
+- name: "Data Partners"
+  description: "Data partners are data sources that we allow the end-users to share\
+    \ data from. Their objects represent companies, platforms and other sources for\
+    \ example Uber, Gusto,Greythr etc."
+- name: "User"
+  description: "User objects represent distinct users that used Linkage plugin to\
+    \ connect their workforce accounts.\nYou can list all users or retrieve a user\
+    \ by id that you have saved on your database when one of the plugin callbacks\
+    \ was invoked."
+- name: "User tokens"
+  description: "User tokens are temporary access keys that ensure Linkage Link user's\
+    \ permissions are scoped to the specified user's data.\nUser tokens are JWT tokens\
+    \ that contain an expiry date."
+- name: "Accounts"
+- name: "Profiles"
+- name: "Reputations"
+paths:
+  /data-partners/{id}:
+    get:
+      tags:
+      - "Data Partners"
+      summary: "Retrieve a data partner"
+      description: "Retrieves a data partner object with the supplied ID."
+      operationId: "getDataPartnerById"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "The identifier of the data partner to be retrieved."
+        required: true
+        style: "simple"
+        explode: false
+        schema:
+          type: "string"
+      responses:
+        "200":
+          description: "Returns a data partner object if a valid identifier was provided."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DataPartner"
+  /data-partners:
+    get:
+      tags:
+      - "Data Partners"
+      summary: "List data partners"
+      description: "Lists all data partners supported by Linkage."
+      operationId: "getAllDataPartners"
+      parameters:
+      - name: "name"
+        in: "query"
+        description: "Only return data partners with the name provided."
+        required: false
+        style: "form"
+        explode: true
+        schema:
+          type: "string"
+      - name: "limit"
+        in: "query"
+        description: "The number of data partner objects to be returned. The default\
+          \ is 10."
+        required: false
+        style: "form"
+        explode: true
+        schema:
+          type: "integer"
+      - name: "offset"
+        in: "query"
+        description: "The number of data partner objects to skip. Use this argument\
+          \ for pagination. The default is 0."
+        required: false
+        style: "form"
+        explode: true
+        schema:
+          type: "integer"
+      responses:
+        "200":
+          description: "An object with a results property that contains an array of\
+            \ data partner objects."
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/DataPartner"
+  /users/{id}:
+    get:
+      tags:
+      - "User"
+      summary: "Retrieve a user"
+      description: "Retrieves a user object with the supplied ID."
+      operationId: "getUserById"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "The identifier of the user to be retrieved."
+        required: true
+        style: "simple"
+        explode: false
+        schema:
+          type: "string"
+      responses:
+        "200":
+          description: "Returns a user object if a valid identifier was provided."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserDetails"
+  /users:
+    get:
+      tags:
+      - "User"
+      summary: "List users"
+      description: "Lists all users that used the plugin configured with your plugin\
+        \ key."
+      operationId: "getAllUsers"
+      parameters:
+      - name: "limit"
+        in: "query"
+        description: "The number of user objects to be returned. The default is 10."
+        required: false
+        style: "form"
+        explode: true
+        schema:
+          type: "integer"
+      - name: "offset"
+        in: "query"
+        description: "The number of user objects to skip. Use this argument for pagination.\
+          \ The default is 0."
+        required: false
+        style: "form"
+        explode: true
+        schema:
+          type: "integer"
+      responses:
+        "200":
+          description: "An object with a results property that contains an array of\
+            \ up to limit user objects."
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/UserDetails"
+  /accounts:
+    get:
+      tags:
+      - "Accounts"
+      description: "verifies a user and gets their details"
+      responses:
+        "200":
+          description: "Successful operation"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/AccountDetails"
+  /accounts/{id}:
+    get:
+      tags:
+      - "Accounts"
+      summary: "Retrieves a user by id."
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "User ID"
+        required: true
+        style: "simple"
+        explode: false
+        schema:
+          type: "string"
+      responses:
+        "200":
+          description: "Successful operation"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AccountDetails"
+    delete:
+      tags:
+      - "Accounts"
+      summary: "Deletes a user id"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "account id"
+        required: true
+        style: "simple"
+        explode: false
+        schema:
+          type: "string"
+      responses:
+        "204":
+          description: "Successful operation"
+  /user-tokens:
+    post:
+      tags:
+      - "User tokens"
+      summary: "Create a token"
+      description: "To create a user token send a POST request with the request body\
+        \ containing a json object of the following format"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                user:
+                  type: "string"
+              example:
+                user: "user-id"
+      responses:
+        "200":
+          description: "Successful operation"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  access:
+                    type: "string"
+                example:
+                  access: "user-token"
+  /profiles:
+    get:
+      tags:
+      - "Profiles"
+      description: "verifies a user and gets their details"
+      responses:
+        "200":
+          description: "Successful operation"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/ProfileDetails"
+  /profiles/{id}:
+    get:
+      tags:
+      - "Profiles"
+      summary: "Retrieves a user by id."
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "User ID"
+        required: true
+        style: "simple"
+        explode: false
+        schema:
+          type: "string"
+      responses:
+        "200":
+          description: "Successful operation"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProfileDetails"
+  /reputations:
+    get:
+      tags:
+      - "Reputations"
+      description: "verifies a user and gets their details"
+      responses:
+        "200":
+          description: "Successful operation"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/ReputationDetails"
+  /reputations/{id}:
+    get:
+      tags:
+      - "Reputations"
+      summary: "Retrieves a user by id."
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "User ID"
+        required: true
+        style: "simple"
+        explode: false
+        schema:
+          type: "string"
+      responses:
+        "200":
+          description: "Successful operation"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReputationDetails"
+components:
+  schemas:
+    UserDetails:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+          description: "Object's unique identifier."
+          example: "0994b847-cc69-4d98-bc99-c5e65e762add"
+        created_at:
+          type: "string"
+          description: "Time at which the user was created. Timestamps follow the\
+            \ ISO 8601 standard, for"
+          example: "2019-11-27T15:56:50.583233Z"
+        data_providers_connected:
+          type: "array"
+          description: "A list of connected data partner IDs"
+          items:
+            type: "string"
+      description: "User objects represent distinct users that used linkagehq plugin\
+        \ to connect their workforce accounts."
+    AccountDetails:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+          example: "ac81e2bc-2157-4535-8ca4-fb1f068df1fc"
+        user:
+          type: "string"
+          example: "ac81e2bc-2157-4535-8ca4-fb1f068df1fc"
+        created_at:
+          type: "string"
+          example: "2019-11-27T15:56:50.583233Z"
+        updated_at:
+          type: "string"
+          example: "2019-11-27T15:56:50.583233Z"
+        connection:
+          type: "object"
+          properties:
+            status:
+              type: "string"
+              example: "connected"
+            error_code:
+              type: "string"
+            updated_at:
+              type: "string"
+              example: "2019-11-29T08:37:42.112859"
+        availability:
+          type: "object"
+          properties:
+            vehicles:
+              type: "object"
+              properties:
+                status:
+                  type: "string"
+                  example: "synced"
+                updated_at:
+                  type: "string"
+                  example: "2019-11-27T15:56:20.699808"
+            documents:
+              type: "object"
+              properties:
+                status:
+                  type: "string"
+                  example: "synced"
+            profiles:
+              type: "object"
+              properties:
+                status:
+                  type: "string"
+                  example: "synced"
+                updated_at:
+                  type: "string"
+                  example: "2019-11-27T15:56:20.699808"
+            reputations:
+              type: "object"
+              properties:
+                status:
+                  type: "string"
+                  example: "synced"
+                updated_at:
+                  type: "string"
+                  example: "2019-11-27T15:56:20.699808"
+        data_partner:
+          type: "string"
+          example: "greyhr"
+    ProfileDetails:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+          example: "47b216e2-d334-4235-bc1e-185d15ab18d0"
+        account:
+          type: "string"
+          example: "010db8b4-a724-47fc-a17e-733b656312a2"
+        created_at:
+          type: "string"
+          example: "2019-11-27T15:56:50.583233Z"
+        updated_at:
+          type: "string"
+          example: "2019-11-27T15:56:50.583233Z"
+        first_name:
+          type: "string"
+          example: "max"
+        last_name:
+          type: "string"
+          example: "payne"
+        full_name:
+          type: "string"
+          example: "max payne"
+        phone_number:
+          type: "string"
+          example: "+12 67579 54645"
+        birth_date:
+          type: "string"
+          example: "+12 67579 54645"
+        picture_url:
+          type: "string"
+          example: "+12 67579 54645"
+        address:
+          type: "object"
+          properties:
+            city:
+              type: "string"
+              example: "NEW YORK"
+            line1:
+              type: "string"
+              example: "NEW YORK"
+            line2:
+              type: "string"
+              example: "NEW YORK"
+            state:
+              type: "string"
+              example: "NEW YORK"
+            country:
+              type: "string"
+              example: "NEW YORK"
+            postal_code:
+              type: "string"
+              example: "NEW YORK"
+        employment_status:
+          type: "string"
+          example: "active"
+        employment_type:
+          type: "string"
+          example: "part time"
+        job_title:
+          type: "string"
+          example: "Driver"
+        aadhaar_number:
+          type: "string"
+          example: "***-***-**15"
+        platform_user_id:
+          type: "string"
+          example: "b18d015a"
+        marital_status:
+          type: "string"
+          example: "married"
+        gender:
+          type: "string"
+          example: "male"
+        hire_dates:
+          type: "array"
+          items:
+            type: "string"
+            example: "2019-01-15T08:00:22.386555Z"
+        terminations:
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              date:
+                type: "string"
+                example: "2019-06-15T00:00:22.142321Z"
+              reason:
+                type: "string"
+                example: "contract ended"
+    ReputationDetails:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+          example: "47b216e2-d334-4235-bc1e-185d15ab18d0"
+        client:
+          type: "string"
+          example: "010db8b4-a724-47fc-a17e-733b656312a2"
+        created_by:
+          type: "string"
+          example: "82bc04fa-1e11-43f2-9a88-357f865b4998"
+        created_at:
+          type: "string"
+          example: "2019-11-27T15:56:50.583233Z"
+        updated_at:
+          type: "string"
+          example: "2019-11-27T15:56:50.583233Z"
+        rating:
+          type: "string"
+          example: "4.95"
+        acceptance_rate:
+          type: "string"
+          example: "0.86"
+        ontime_rate:
+          type: "string"
+          example: "0.8"
+        account:
+          type: "string"
+          example: "010db8b4-a724-47fc-a17e-733b656312a2"
+        achievements:
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              count:
+                type: "integer"
+                example: 1
+              label:
+                type: "string"
+                example: "perfect_rating"
+              badge_url:
+                type: "string"
+                example: "https://media.website.com/1554853.png"
+              description:
+                type: "string"
+                example: "Earned on total 5-star ratings"
+    DataPartner:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+          description: "Object's unique identifier."
+          example: "uber"
+        name:
+          type: "string"
+          description: "Name of the data partner. e.g. Uber."
+          example: "Uber Technologies"
+        type:
+          type: "string"
+          description: "Type of the data partner. The value will be one of the following\
+            \ - delivery, rideshare, or services."
+          example: "services"
