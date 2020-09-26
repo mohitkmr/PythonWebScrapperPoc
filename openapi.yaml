@@ -15,12 +15,20 @@ info:
     email: "contact@linkagehq.com"
   version: "v1.0"
 servers:
-- url: "https://prod.linkagehq.com/api/v1.0/"
+- url: "https://api.linkagehq.com/v1/"
   description: "Production Server endpoint to connect data with Linkage."
-- url: "https://sandbox.linkagehq.com/api/v1.0/"
+- url: "https://api-sandbox.linkagehq.com/v1/"
   description: "sandbox server which will hepls you simulate the system for testing\
     \ purposes."
+- url: "https://virtserver.swaggerhub.com/LinkageHQ/Api-Documentation/v1"
+  description: "SwaggerHub API Auto Mocking"
 tags:
+- name: "Authentication"
+  description: "Our API uses HTTP Basic Auth with the credentials provided to you\
+    \ through **Linkage** client console.\n\nOnly you can access your customers' data\
+    \ by making requests Linkage API with your client_id and client_secret. The API\
+    \ should be invoked from your own server side applications in order to protect\
+    \ your credentials from being revealed on the client side."
 - name: "Data Partners"
   description: "Data partners are data sources that we allow the end-users to share\
     \ data from. Their objects represent companies, platforms and other sources for\
@@ -741,43 +749,42 @@ components:
           example: "2019-11-27T15:56:50.583233Z"
         first_name:
           type: "string"
-          example: "max"
+          example: "M"
         last_name:
           type: "string"
-          example: "payne"
+          example: "Rajendran"
         full_name:
           type: "string"
-          example: "max payne"
+          example: "M. Rajendran"
         phone_number:
           type: "string"
           example: "+12 67579 54645"
         birth_date:
           type: "string"
-          example: "+12 67579 54645"
+          example: "1982-02-18"
         picture_url:
           type: "string"
-          example: "+12 67579 54645"
         address:
           type: "object"
           properties:
             city:
               type: "string"
-              example: "NEW YORK"
+              example: "Singapore"
             line1:
               type: "string"
-              example: "NEW YORK"
+              example: "Mandalay Road"
             line2:
               type: "string"
-              example: "NEW YORK"
+              example: "Mandalay Towers"
             state:
               type: "string"
-              example: "NEW YORK"
+              example: "SINGAPORE"
             country:
               type: "string"
-              example: "NEW YORK"
+              example: "SINGAPORE"
             postal_code:
               type: "string"
-              example: "NEW YORK"
+              example: "308215"
         employment_status:
           type: "string"
           example: "active"
@@ -1008,15 +1015,15 @@ components:
             city:
               type: "string"
               description: "City."
-              example: "NEW YORK"
+              example: "SINGAPORE"
             country:
               type: "string"
               description: "Country."
-              example: "US"
+              example: "SINGAPORE"
             state:
               type: "string"
               description: "State."
-              example: "NY"
+              example: "SINGAPORE"
             line1:
               type: "string"
               description: "Address line 1."
@@ -1027,7 +1034,7 @@ components:
             postal_code:
               type: "string"
               description: "Postal code."
-              example: "560087"
+              example: "308215"
           description: "Employer Address Details"
       description: "Payouts objects contain aggregate payouts data."
     Finances:
