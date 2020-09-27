@@ -15,13 +15,11 @@ info:
     email: "contact@linkagehq.com"
   version: "v1.0"
 servers:
-- url: "https://api.linkagehq.com/v1/"
+- url: "https://api.linkagehq.com/v1"
   description: "Production Server endpoint to connect data with Linkage."
-- url: "https://api-sandbox.linkagehq.com/v1/"
+- url: "https://api-sandbox.linkagehq.com/v1"
   description: "sandbox server which will hepls you simulate the system for testing\
     \ purposes."
-- url: "https://virtserver.swaggerhub.com/LinkageHQ/Api-Documentation/v1"
-  description: "SwaggerHub API Auto Mocking"
 tags:
 - name: "Authentication"
   description: "Our API uses HTTP Basic Auth with the credentials provided to you\
@@ -60,6 +58,71 @@ tags:
   description: "Payouts objects contain aggregate payouts data."
 - name: "Finances"
   description: "Finance objects contain data about user's finances."
+- name: "Webhooks Guide"
+  description: "<h2><b>Accounts</b></h2>\nAccounts webhooks will notify your system\
+    \ when new accounts are created or existing accounts are either updated or deleted.<br><br>\n\
+    Two additional webhooks will also notify you if an authentication attempt is successful\
+    \ and the account is connected or if the authentication attempt failed and the\
+    \ account is created with a failed authentication state.<br><br>\n<b>Events</b>\
+    \ \n  <ul>\n    <li>accounts.added</li>\n    <li>accounts.updated</li>\n    <li>accounts.removed</li>\n\
+    \    <li>accounts.connected</li>\n    <li>accounts.failed</li>\n</ul>\n\n\n  \n\
+    \  \n  \n  \n  \n<h2><b>Profiles</b></h2>\nProfiles webhooks will notify your\
+    \ system when\n  <ol>\n    <li>A new profile object is created after the new account\
+    \ is scanned with an initial scan.</li>\n    <li>An existing profile object is\
+    \ updated with new information after a periodic scan.</li>\n  </ol>\n  <br>\n\
+    \  <b>Events</b> \n  <ul>\n    <li>profiles.added</li>\n    <li>profiles.updated</li>\n\
+    </ul>\n  \n  \n  \n  \n  \n<br><br>\n<h2><b>Reputations</b></h2>\nReputations\
+    \ webhooks will notify your system when:\n  <ol>\n    <li>A new reputation object\
+    \ is created after the new account is scanned with an initial scan..</li>\n  \
+    \  <li>An existing reputation object is updated with new information after a periodic\
+    \ scan..</li>\n  </ol>\n  <br>\n  <b>Events</b> \n  <ul>\n    <li>reputations.added</li>\n\
+    \    <li>reputations.updated</li>\n</ul>\n    \n  \n  \n  \n  \n<br><br>\n<h2><b>Documents</b></h2>\n\
+    Documents webhooks will notify your system when:\n  <ol>\n    <li>A new document\
+    \ object is created after the new account is scanned with an initial scan or after\
+    \ an additional documents are found during the periodic scan.</li>\n    <li>An\
+    \ existing document object is updated with new information after a periodic scan.</li>\n\
+    \  <li>An existing document object is deleted by a data platform and is found\
+    \ to be missing during a periodic scan or when the parent account gets deleted.</li>\n\
+    \  </ol>\n  <br>\n  <b>Events</b> \n  <ul>\n    <li>documents.added</li>\n   \
+    \ <li>documents.updated</li>\n</ul>  \n\n\n\n<br><br>\n<h2><b>Vehicles</b></h2>\n\
+    Vehicles webhooks will notify your system when:\n  <ol>\n    <li>A new vehicle\
+    \ object is created after the new account is scanned with an initial scan or after\
+    \ an additional documents are found during the periodic scan.</li>\n    <li>An\
+    \ existing vehicle object is updated with new information after a periodic scan.</li>\n\
+    \  <li>An existing vehicle object is deleted by a data platform and is found to\
+    \ be missing during a periodic scan or when the parent account gets deleted.</li>\n\
+    \  </ol>\n  <br>\n  <b>Events</b> \n  <ul>\n    <li>vehicles.added</li>\n    <li>vehicles.updated</li>\n\
+    \    <li>vehicles.removed</li>\n</ul>  \n\n\n\n\n\n<br><br>\n<h2><b>Activities</b></h2>\n\
+    There are two types of activity webhook events:\n  <ol>\n    <li>Events that trigger\
+    \ only on the initial scanning when a new account is connected: activities.fully_syncedand\
+    \  activities.partially_synced. They will trigger once per invocation for each\
+    \ added account.</li>\n    <li>Events that trigger later on, when new activities\
+    \ are added in future: activities.addedand  activities.updated. They will only\
+    \ trigger on a periodic scan for accounts that are already connected and have\
+    \ been fully synced, and only after the activities.fully_syncedevent has been\
+    \ triggered.</li>\n  </ol>\n  A typical account can contain thousands of activities\
+    \ and activities.fully_syncedwill only fire after all of the activities are scanned,\
+    \ which in some cases might take hours.<br>\n  \nTherefore activities.partially_syncedcan\
+    \ be used if only a partial range of the activities is needed. For example a history\
+    \ of last 30 days instead of the complete history of activities. This will reduce\
+    \ the sync time to minutes or in some cases seconds.<br>\n  \n<br>\n  <b>Events</b>\
+    \ \n  <ul>\n    <li>activities.fully_synced</li>\n    <li>activities.partially_synced</li>\n\
+    \    <li>activities.added</li>\n    <li>activities.updated</li>\n</ul>  \n\n\n\
+    \n<br><br>\n<h2><b>Payouts</b></h2>\nThere are two types of payouts webhook events:\n\
+    \  <ol>\n    <li>Events that trigger only on the initial scanning when a new account\
+    \ is connected: payouts.fully_syncedand  payouts.partially_synced. They will trigger\
+    \ once per invocation for each added account.</li>\n    <li>Events that trigger\
+    \ later on, when new payouts are added in future: payouts.addedand  payouts.updated.\
+    \ They will only trigger on a periodic scan for accounts that are already connected\
+    \ and have been fully synced, and only after the payouts.fully_syncedevent has\
+    \ been triggered.</li>\n  </ol>\n  A typical account can contain thousands of\
+    \ payouts and payouts.fully_syncedwill only fire after all of the payouts are\
+    \ scanned, which in some cases might take hours.<br>\n  \nTherefore payouts.partially_syncedcan\
+    \ be used if only a partial range of the payouts is needed. For example a history\
+    \ of last 30 days instead of the complete history of years of payouts. This will\
+    \ reduce the sync time to minutes or in some cases seconds.<br>\n  \n<br>\n  <b>Events</b>\
+    \ \n  <ul>\n    <li>payouts.fully_synced</li>\n    <li>payouts.partially_synced</li>\n\
+    \    <li>payouts.added</li>\n    <li>payouts.updated</li>\n</ul>  \n"
 paths:
   /data-partners/{id}:
     get:
@@ -316,6 +379,7 @@ paths:
     get:
       tags:
       - "Profiles"
+      summary: "Lists Profiles"
       description: "Lists profile objects."
       operationId: "getAllProfiles"
       parameters:
@@ -389,7 +453,7 @@ paths:
     get:
       tags:
       - "Reputations"
-      summary: "List reputations"
+      summary: "List Reputations"
       description: "Lists all reputation objects which are registered in Linkage."
       operationId: "getAllReputations"
       responses:
@@ -584,6 +648,171 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Payouts"
+  /webhooks:
+    get:
+      tags:
+      - "Webhooks Guide"
+      summary: "List webhooks"
+      description: "List webhooks"
+      operationId: "getAllWebhooks"
+      parameters:
+      - name: "limit"
+        in: "query"
+        description: "The number of user objects to be returned. The default is 10."
+        required: false
+        style: "form"
+        explode: true
+        schema:
+          type: "integer"
+      - name: "offset"
+        in: "query"
+        description: "The number of user objects to skip. Use this argument for pagination.\
+          \ The default is 0."
+        required: false
+        style: "form"
+        explode: true
+        schema:
+          type: "integer"
+      responses:
+        "200":
+          description: "An object with a results property that contains an array of\
+            \ up to limit webhook objects."
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/Webhook"
+    post:
+      tags:
+      - "Webhooks Guide"
+      summary: "Creates a new webhook."
+      description: "Create a webhook for the events."
+      operationId: "registerWebhooks"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                events:
+                  type: "array"
+                  items:
+                    type: "string"
+                url:
+                  type: "string"
+            examples:
+              Accounts:
+                summary: "Supported Account Events"
+                value:
+                  events:
+                  - "accounts.added"
+                  - "accounts.updated"
+                  - "accounts.removed"
+                  - "accounts.connected"
+                  - "accounts.failed"
+                  url: "https://webhook.site/url"
+              Profiles:
+                summary: "Supported Profile Events"
+                value:
+                  events:
+                  - "profiles.added"
+                  - "profiles.updated"
+                  url: "https://webhook.site/url"
+              Reputations:
+                summary: "Supported Reputation Events"
+                value:
+                  events:
+                  - "reputations.added"
+                  - "reputations.updated"
+                  url: "https://webhook.site/url"
+              Documents:
+                summary: "Supported Documents Events"
+                value:
+                  events:
+                  - "documents.added"
+                  - "documents.updated"
+                  - "documents.removed"
+                  url: "https://webhook.site/url"
+              Vehicles:
+                summary: "Supported Vehicles Events"
+                value:
+                  events:
+                  - "vehicles.added"
+                  - "vehicles.updated"
+                  - "vehicles.removed"
+                  url: "https://webhook.site/url"
+              Activities:
+                summary: "Supported Activities Events"
+                value:
+                  events:
+                  - "activities.fully_synced"
+                  - "activities.partially_synced"
+                  - "activities.added"
+                  - "activities.updated"
+                  url: "https://webhook.site/url"
+              Payouts:
+                summary: "Supported Activities Events"
+                value:
+                  events:
+                  - "payouts.fully_synced"
+                  - "payouts.partially_synced"
+                  - "payouts.added"
+                  - "payouts.updated"
+                  url: "https://webhook.site/url"
+      responses:
+        "200":
+          description: "The user token enclosed in a json object: {\"access\": \"\
+            user-token\"}."
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  access:
+                    type: "string"
+  /webhooks/{id}:
+    get:
+      tags:
+      - "Webhooks Guide"
+      summary: "Retrieve a webhook"
+      description: "Retrieves a webhook object with the supplied ID."
+      operationId: "getWebhookById"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "Identifier of the webhook object to be retrieved."
+        required: true
+        style: "simple"
+        explode: false
+        schema:
+          type: "string"
+      responses:
+        "200":
+          description: "Returns a webhook object if a valid identifier was provided."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Webhook"
+    delete:
+      tags:
+      - "Webhooks Guide"
+      summary: "Delete a webhook"
+      description: "Removes a webhook and unsubscribes your system from the events\
+        \ in the deleted webhook."
+      operationId: "deleteWebhookById"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of the account to be deleted."
+        required: true
+        style: "simple"
+        explode: false
+        schema:
+          type: "string"
+      responses:
+        "204":
+          description: "An empty response body."
 components:
   schemas:
     DataPartner:
@@ -1053,3 +1282,32 @@ components:
           description: "A name of a possibly platform specific payout method."
           example: "uber"
       description: "Finance objects contain data about user's finances."
+    Webhook:
+      title: "Webhook"
+      type: "object"
+      properties:
+        id:
+          type: "string"
+          description: "Object's unique identifier."
+          example: "580dca76-c024-4458-bb10-a2111ad4063e"
+        is_active:
+          type: "boolean"
+          description: "Only active webhooks will receive webhook calls from Linkage."
+          example: true
+        events:
+          type: "array"
+          description: "An array of Argyle's webhook event types. E.g. [\"activities.added\"\
+            ]. Refer to webhooks reference for the full list of available event types."
+          example:
+          - "activities.added"
+          items:
+            type: "string"
+        url:
+          type: "string"
+          description: "Endpoint that will be invoked when the specified event occurs."
+          example: "https://webhooks-backend.com/linkage"
+        secret:
+          type: "string"
+          description: "Key that will be used to generate HMAC-SHA512 hex digest value\
+            \ in the X-Argyle-Signature header."
+      description: "The webhook object"
