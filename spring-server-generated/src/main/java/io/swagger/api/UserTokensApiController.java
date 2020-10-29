@@ -1,6 +1,6 @@
 package io.swagger.api;
 
-import io.swagger.model.Body;
+import io.swagger.model.Body1;
 import io.swagger.model.InlineResponse200;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2020-09-26T10:30:08.165Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2020-10-29T02:24:33.854Z[GMT]")
 @Controller
 public class UserTokensApiController implements UserTokensApi {
 
@@ -39,12 +39,12 @@ public class UserTokensApiController implements UserTokensApi {
         this.request = request;
     }
 
-    public ResponseEntity<InlineResponse200> getUserToken(@ApiParam(value = ""  )  @Valid @RequestBody Body body
+    public ResponseEntity<InlineResponse200> getUserToken(@ApiParam(value = ""  )  @Valid @RequestBody Body1 body
 ) {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
-                return new ResponseEntity<InlineResponse200>(objectMapper.readValue("{\n  \"access\" : \"user-token\"\n}", InlineResponse200.class), HttpStatus.NOT_IMPLEMENTED);
+                return new ResponseEntity<InlineResponse200>(objectMapper.readValue("{\n  \"access\" : \"ac81e2bc-2157-4535-8ca4-fb1f068df1fc\"\n}", InlineResponse200.class), HttpStatus.NOT_IMPLEMENTED);
             } catch (IOException e) {
                 log.error("Couldn't serialize response for content type application/json", e);
                 return new ResponseEntity<InlineResponse200>(HttpStatus.INTERNAL_SERVER_ERROR);

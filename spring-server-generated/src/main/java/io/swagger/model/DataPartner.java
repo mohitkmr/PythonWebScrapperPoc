@@ -13,7 +13,7 @@ import javax.validation.constraints.*;
  * DataPartner
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2020-09-26T10:30:08.165Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2020-10-29T02:24:33.854Z[GMT]")
 
 
 public class DataPartner   {
@@ -35,7 +35,7 @@ public class DataPartner   {
    * Object's unique identifier.
    * @return id
   **/
-  @ApiModelProperty(example = "uber", value = "Object's unique identifier.")
+  @ApiModelProperty(example = "lendingkart", value = "Object's unique identifier.")
   
     public String getId() {
     return id;
@@ -51,10 +51,10 @@ public class DataPartner   {
   }
 
   /**
-   * Name of the data partner. e.g. Uber.
+   * Name of the data partner. e.g. Lendingkart.
    * @return name
   **/
-  @ApiModelProperty(example = "Uber Technologies", value = "Name of the data partner. e.g. Uber.")
+  @ApiModelProperty(example = "Lendingkart Technologies", value = "Name of the data partner. e.g. Lendingkart.")
   
     public String getName() {
     return name;

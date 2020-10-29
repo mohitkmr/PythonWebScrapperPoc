@@ -13,7 +13,7 @@ import javax.validation.constraints.*;
  * ProfileDetailsAddress
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2020-09-26T10:30:08.165Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2020-10-29T02:24:33.854Z[GMT]")
 
 
 public class ProfileDetailsAddress   {
@@ -44,7 +44,7 @@ public class ProfileDetailsAddress   {
    * Get city
    * @return city
   **/
-  @ApiModelProperty(example = "NEW YORK", value = "")
+  @ApiModelProperty(example = "Singapore", value = "")
   
     public String getCity() {
     return city;
@@ -63,7 +63,7 @@ public class ProfileDetailsAddress   {
    * Get line1
    * @return line1
   **/
-  @ApiModelProperty(example = "NEW YORK", value = "")
+  @ApiModelProperty(example = "Mandalay Road", value = "")
   
     public String getLine1() {
     return line1;
@@ -82,7 +82,7 @@ public class ProfileDetailsAddress   {
    * Get line2
    * @return line2
   **/
-  @ApiModelProperty(example = "NEW YORK", value = "")
+  @ApiModelProperty(example = "Mandalay Towers", value = "")
   
     public String getLine2() {
     return line2;
@@ -101,7 +101,7 @@ public class ProfileDetailsAddress   {
    * Get state
    * @return state
   **/
-  @ApiModelProperty(example = "NEW YORK", value = "")
+  @ApiModelProperty(example = "SINGAPORE", value = "")
   
     public String getState() {
     return state;
@@ -120,7 +120,7 @@ public class ProfileDetailsAddress   {
    * Get country
    * @return country
   **/
-  @ApiModelProperty(example = "NEW YORK", value = "")
+  @ApiModelProperty(example = "SINGAPORE", value = "")
   
     public String getCountry() {
     return country;
@@ -139,7 +139,7 @@ public class ProfileDetailsAddress   {
    * Get postalCode
    * @return postalCode
   **/
-  @ApiModelProperty(example = "NEW YORK", value = "")
+  @ApiModelProperty(example = "308215", value = "")
   
     public String getPostalCode() {
     return postalCode;

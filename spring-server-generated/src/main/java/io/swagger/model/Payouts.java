@@ -15,7 +15,7 @@ import javax.validation.constraints.*;
  */
 @ApiModel(description = "Payouts objects contain aggregate payouts data.")
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2020-09-26T10:30:08.165Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2020-10-29T02:24:33.854Z[GMT]")
 
 
 public class Payouts   {
@@ -171,7 +171,7 @@ public class Payouts   {
    * Gross pay amount.
    * @return grossPay
   **/
-  @ApiModelProperty(example = "6.70", value = "Gross pay amount.")
+  @ApiModelProperty(example = "230000", value = "Gross pay amount.")
   
     public String getGrossPay() {
     return grossPay;
@@ -209,7 +209,7 @@ public class Payouts   {
    * Taxes amount.
    * @return taxes
   **/
-  @ApiModelProperty(example = "2.31", value = "Taxes amount.")
+  @ApiModelProperty(example = "45005", value = "Taxes amount.")
   
     public String getTaxes() {
     return taxes;
@@ -228,7 +228,7 @@ public class Payouts   {
    * Net pay amount.
    * @return netPay
   **/
-  @ApiModelProperty(example = "6.70", value = "Net pay amount.")
+  @ApiModelProperty(example = "202009", value = "Net pay amount.")
   
     public String getNetPay() {
     return netPay;
@@ -247,7 +247,7 @@ public class Payouts   {
    * Bonuses amount.
    * @return bonuses
   **/
-  @ApiModelProperty(example = "10.70", value = "Bonuses amount.")
+  @ApiModelProperty(example = "1000.70", value = "Bonuses amount.")
   
     public String getBonuses() {
     return bonuses;
@@ -266,7 +266,7 @@ public class Payouts   {
    * Commission amount
    * @return commission
   **/
-  @ApiModelProperty(example = "15.32", value = "Commission amount")
+  @ApiModelProperty(example = "0", value = "Commission amount")
   
     public String getCommission() {
     return commission;
@@ -285,7 +285,7 @@ public class Payouts   {
    * Overtime pay amount.
    * @return overtime
   **/
-  @ApiModelProperty(example = "9.02", value = "Overtime pay amount.")
+  @ApiModelProperty(example = "0", value = "Overtime pay amount.")
   
     public String getOvertime() {
     return overtime;
@@ -304,7 +304,7 @@ public class Payouts   {
    * Reimbursement amount.
    * @return reimbursements
   **/
-  @ApiModelProperty(example = "20.00", value = "Reimbursement amount.")
+  @ApiModelProperty(example = "0", value = "Reimbursement amount.")
   
     public String getReimbursements() {
     return reimbursements;
@@ -323,7 +323,7 @@ public class Payouts   {
    * Hours spent working.
    * @return hours
   **/
-  @ApiModelProperty(value = "Hours spent working.")
+  @ApiModelProperty(example = "180", value = "Hours spent working.")
   
     public String getHours() {
     return hours;

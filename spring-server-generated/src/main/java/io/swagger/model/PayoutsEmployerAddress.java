@@ -14,7 +14,7 @@ import javax.validation.constraints.*;
  */
 @ApiModel(description = "Employer Address Details")
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2020-09-26T10:30:08.165Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2020-10-29T02:24:33.854Z[GMT]")
 
 
 public class PayoutsEmployerAddress   {
@@ -45,7 +45,7 @@ public class PayoutsEmployerAddress   {
    * City.
    * @return city
   **/
-  @ApiModelProperty(example = "NEW YORK", value = "City.")
+  @ApiModelProperty(example = "Bangalore", value = "City.")
   
     public String getCity() {
     return city;
@@ -64,7 +64,7 @@ public class PayoutsEmployerAddress   {
    * Country.
    * @return country
   **/
-  @ApiModelProperty(example = "US", value = "Country.")
+  @ApiModelProperty(example = "India", value = "Country.")
   
     public String getCountry() {
     return country;
@@ -83,7 +83,7 @@ public class PayoutsEmployerAddress   {
    * State.
    * @return state
   **/
-  @ApiModelProperty(example = "NY", value = "State.")
+  @ApiModelProperty(example = "Karnataka", value = "State.")
   
     public String getState() {
     return state;
@@ -102,7 +102,7 @@ public class PayoutsEmployerAddress   {
    * Address line 1.
    * @return line1
   **/
-  @ApiModelProperty(example = "33 IRVING PLACE", value = "Address line 1.")
+  @ApiModelProperty(example = "Kormangla", value = "Address line 1.")
   
     public String getLine1() {
     return line1;
@@ -121,7 +121,7 @@ public class PayoutsEmployerAddress   {
    * Address line 2.
    * @return line2
   **/
-  @ApiModelProperty(value = "Address line 2.")
+  @ApiModelProperty(example = "29th main", value = "Address line 2.")
   
     public String getLine2() {
     return line2;

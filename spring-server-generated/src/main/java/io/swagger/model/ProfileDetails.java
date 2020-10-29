@@ -17,7 +17,7 @@ import javax.validation.constraints.*;
  * ProfileDetails
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2020-09-26T10:30:08.165Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2020-10-29T02:24:33.854Z[GMT]")
 
 
 public class ProfileDetails   {
@@ -168,7 +168,7 @@ public class ProfileDetails   {
    * Get firstName
    * @return firstName
   **/
-  @ApiModelProperty(example = "max", value = "")
+  @ApiModelProperty(example = "M", value = "")
   
     public String getFirstName() {
     return firstName;
@@ -187,7 +187,7 @@ public class ProfileDetails   {
    * Get lastName
    * @return lastName
   **/
-  @ApiModelProperty(example = "payne", value = "")
+  @ApiModelProperty(example = "Rajendran", value = "")
   
     public String getLastName() {
     return lastName;
@@ -206,7 +206,7 @@ public class ProfileDetails   {
    * Get fullName
    * @return fullName
   **/
-  @ApiModelProperty(example = "max payne", value = "")
+  @ApiModelProperty(example = "M. Rajendran", value = "")
   
     public String getFullName() {
     return fullName;
@@ -244,7 +244,7 @@ public class ProfileDetails   {
    * Get birthDate
    * @return birthDate
   **/
-  @ApiModelProperty(example = "+12 67579 54645", value = "")
+  @ApiModelProperty(example = "1982-02-18", value = "")
   
     public String getBirthDate() {
     return birthDate;
@@ -263,7 +263,7 @@ public class ProfileDetails   {
    * Get pictureUrl
    * @return pictureUrl
   **/
-  @ApiModelProperty(example = "+12 67579 54645", value = "")
+  @ApiModelProperty(value = "")
   
     public String getPictureUrl() {
     return pictureUrl;

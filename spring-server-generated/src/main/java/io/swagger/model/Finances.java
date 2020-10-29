@@ -14,7 +14,7 @@ import javax.validation.constraints.*;
  */
 @ApiModel(description = "Finance objects contain data about user's finances.")
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2020-09-26T10:30:08.165Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2020-10-29T02:24:33.854Z[GMT]")
 
 
 public class Finances   {
@@ -36,7 +36,7 @@ public class Finances   {
    * Current balance.
    * @return balance
   **/
-  @ApiModelProperty(example = "100", value = "Current balance.")
+  @ApiModelProperty(example = "100000", value = "Current balance.")
   
     public String getBalance() {
     return balance;
@@ -55,7 +55,7 @@ public class Finances   {
    * Currency of current balance.
    * @return balanceCurrency
   **/
-  @ApiModelProperty(value = "Currency of current balance.")
+  @ApiModelProperty(example = "INR", value = "Currency of current balance.")
   
     public String getBalanceCurrency() {
     return balanceCurrency;
@@ -74,7 +74,7 @@ public class Finances   {
    * A name of a possibly platform specific payout method.
    * @return payoutMethod
   **/
-  @ApiModelProperty(example = "uber", value = "A name of a possibly platform specific payout method.")
+  @ApiModelProperty(example = "monthly", value = "A name of a possibly platform specific payout method.")
   
     public String getPayoutMethod() {
     return payoutMethod;

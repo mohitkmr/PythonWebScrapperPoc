@@ -13,30 +13,52 @@ import javax.validation.constraints.*;
  * Body
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2020-09-26T10:30:08.165Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2020-10-29T02:24:33.854Z[GMT]")
 
 
 public class Body   {
-  @JsonProperty("user")
-  private String user = null;
+  @JsonProperty("username")
+  private String username = null;
 
-  public Body user(String user) {
-    this.user = user;
+  @JsonProperty("password")
+  private String password = null;
+
+  public Body username(String username) {
+    this.username = username;
     return this;
   }
 
   /**
-   * Get user
-   * @return user
+   * Get username
+   * @return username
   **/
-  @ApiModelProperty(example = "fdwr-3425325-sdvsfg", value = "")
+  @ApiModelProperty(example = "mohit@lenginekart.com", value = "")
   
-    public String getUser() {
-    return user;
+    public String getUsername() {
+    return username;
   }
 
-  public void setUser(String user) {
-    this.user = user;
+  public void setUsername(String username) {
+    this.username = username;
+  }
+
+  public Body password(String password) {
+    this.password = password;
+    return this;
+  }
+
+  /**
+   * Get password
+   * @return password
+  **/
+  @ApiModelProperty(example = "12345", value = "")
+  
+    public String getPassword() {
+    return password;
+  }
+
+  public void setPassword(String password) {
+    this.password = password;
   }
 
 
@@ -49,12 +71,13 @@ public class Body   {
       return false;
     }
     Body body = (Body) o;
-    return Objects.equals(this.user, body.user);
+    return Objects.equals(this.username, body.username) &&
+        Objects.equals(this.password, body.password);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(user);
+    return Objects.hash(username, password);
   }
 
   @Override
@@ -62,7 +85,8 @@ public class Body   {
     StringBuilder sb = new StringBuilder();
     sb.append("class Body {\n");
     
-    sb.append("    user: ").append(toIndentedString(user)).append("\n");
+    sb.append("    username: ").append(toIndentedString(username)).append("\n");
+    sb.append("    password: ").append(toIndentedString(password)).append("\n");
     sb.append("}");
     return sb.toString();
   }

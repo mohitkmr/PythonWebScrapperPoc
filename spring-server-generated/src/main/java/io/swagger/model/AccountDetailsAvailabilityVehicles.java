@@ -13,7 +13,7 @@ import javax.validation.constraints.*;
  * AccountDetailsAvailabilityVehicles
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2020-09-26T10:30:08.165Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2020-10-29T02:24:33.854Z[GMT]")
 
 
 public class AccountDetailsAvailabilityVehicles   {
@@ -51,7 +51,7 @@ public class AccountDetailsAvailabilityVehicles   {
    * Get updatedAt
    * @return updatedAt
   **/
-  @ApiModelProperty(example = "2019-11-27T15:56:20.699Z", value = "")
+  @ApiModelProperty(example = "2019-11-27T15:56:20.699808", value = "")
   
     public String getUpdatedAt() {
     return updatedAt;

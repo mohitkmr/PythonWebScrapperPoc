@@ -1,6 +1,8 @@
 package io.swagger.api;
 
+import io.swagger.model.Body;
 import io.swagger.model.UserDetails;
+import io.swagger.model.UserLogin;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
 import org.slf4j.Logger;
@@ -22,7 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2020-09-26T10:30:08.165Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2020-10-29T02:24:33.854Z[GMT]")
 @Controller
 public class UsersApiController implements UsersApi {
 
@@ -67,6 +69,23 @@ public class UsersApiController implements UsersApi {
         }
 
         return new ResponseEntity<UserDetails>(HttpStatus.NOT_IMPLEMENTED);
+    }
+
+    public ResponseEntity<UserLogin> loginToPayrollProvider(@ApiParam(value = "The identifier of the user to be retrieved.",required=true) @PathVariable("id") String id
+,@ApiParam(value = "The identifier of the payroll provider.",required=true) @PathVariable("provider") String provider
+,@ApiParam(value = ""  )  @Valid @RequestBody Body body
+) {
+        String accept = request.getHeader("Accept");
+        if (accept != null && accept.contains("application/json")) {
+            try {
+                return new ResponseEntity<UserLogin>(objectMapper.readValue("{\n  \"status\" : \"success\"\n}", UserLogin.class), HttpStatus.NOT_IMPLEMENTED);
+            } catch (IOException e) {
+                log.error("Couldn't serialize response for content type application/json", e);
+                return new ResponseEntity<UserLogin>(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        }
+
+        return new ResponseEntity<UserLogin>(HttpStatus.NOT_IMPLEMENTED);
     }
 
 }

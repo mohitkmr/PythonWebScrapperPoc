@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2020-09-26T10:30:08.165Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2020-10-29T02:24:33.854Z[GMT]")
 @Controller
 public class FinancesApiController implements FinancesApi {
 
@@ -43,7 +43,7 @@ public class FinancesApiController implements FinancesApi {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
-                return new ResponseEntity<List<Finances>>(objectMapper.readValue("[ {\n  \"balance\" : \"100\",\n  \"balance_currency\" : \"balance_currency\",\n  \"payout_method\" : \"uber\"\n}, {\n  \"balance\" : \"100\",\n  \"balance_currency\" : \"balance_currency\",\n  \"payout_method\" : \"uber\"\n} ]", List.class), HttpStatus.NOT_IMPLEMENTED);
+                return new ResponseEntity<List<Finances>>(objectMapper.readValue("[ {\n  \"balance\" : \"100000\",\n  \"balance_currency\" : \"INR\",\n  \"payout_method\" : \"monthly\"\n}, {\n  \"balance\" : \"100000\",\n  \"balance_currency\" : \"INR\",\n  \"payout_method\" : \"monthly\"\n} ]", List.class), HttpStatus.NOT_IMPLEMENTED);
             } catch (IOException e) {
                 log.error("Couldn't serialize response for content type application/json", e);
                 return new ResponseEntity<List<Finances>>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -58,7 +58,7 @@ public class FinancesApiController implements FinancesApi {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
-                return new ResponseEntity<Payouts>(objectMapper.readValue("{\n  \"hours\" : \"hours\",\n  \"metadata\" : \"metadata\",\n  \"taxes\" : \"2.31\",\n  \"reimbursements\" : \"20.00\",\n  \"type\" : \"direct_deposit\",\n  \"gross_pay\" : \"6.70\",\n  \"deductions\" : \"0.00\",\n  \"net_pay\" : \"6.70\",\n  \"employer_address\" : {\n    \"country\" : \"US\",\n    \"city\" : \"NEW YORK\",\n    \"state\" : \"NY\",\n    \"postal_code\" : \"560087\",\n    \"line2\" : \"line2\",\n    \"line1\" : \"33 IRVING PLACE\"\n  },\n  \"payout_date\" : \"2020-01-27T08:26:16Z\",\n  \"overtime\" : \"9.02\",\n  \"currency\" : \"INR\",\n  \"commission\" : \"15.32\",\n  \"id\" : \"47b216e2-d334-4235-bc1e-185d15ab18d0\",\n  \"bonuses\" : \"10.70\",\n  \"status\" : \"completed\"\n}", Payouts.class), HttpStatus.NOT_IMPLEMENTED);
+                return new ResponseEntity<Payouts>(objectMapper.readValue("{\n  \"hours\" : \"180\",\n  \"metadata\" : \"null\",\n  \"taxes\" : \"45005\",\n  \"reimbursements\" : \"0\",\n  \"type\" : \"direct_deposit\",\n  \"gross_pay\" : \"230000\",\n  \"deductions\" : \"0.00\",\n  \"net_pay\" : \"202009\",\n  \"employer_address\" : {\n    \"country\" : \"India\",\n    \"city\" : \"Bangalore\",\n    \"state\" : \"Karnataka\",\n    \"postal_code\" : \"560087\",\n    \"line2\" : \"29th main\",\n    \"line1\" : \"Kormangla\"\n  },\n  \"payout_date\" : \"2020-01-27T08:26:16Z\",\n  \"overtime\" : \"0\",\n  \"currency\" : \"INR\",\n  \"commission\" : \"0\",\n  \"id\" : \"47b216e2-d334-4235-bc1e-185d15ab18d0\",\n  \"bonuses\" : \"1000.70\",\n  \"status\" : \"completed\"\n}", Payouts.class), HttpStatus.NOT_IMPLEMENTED);
             } catch (IOException e) {
                 log.error("Couldn't serialize response for content type application/json", e);
                 return new ResponseEntity<Payouts>(HttpStatus.INTERNAL_SERVER_ERROR);
